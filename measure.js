@@ -2,17 +2,16 @@ var pmx = require('pmx').init({
     network: true,
     ports: true
 });
-
 var probe = pmx.probe();
+var milliampere = 0.0;
 
-var histogram = probe.histogram({
-  name        : 'latency',
-  measurement : 'mean'
+var metric = probe.metric({
+    name  : 'Sensor milliampere',
+    value : function() {
+        return milliampere;
+    }
 });
 
-var latency = 0;
-
 setInterval(function() {
-  latency = Math.round(Math.random() * 100);
-  histogram.update(latency);
+  milliampere = Math.round(Math.random() * 100);
 }, 100);
