@@ -15,24 +15,18 @@ var metric = probe.metric({
 });
 
 setInterval(function() {
-  milliampere = Math.round(Math.random() * 100);
   var timestamp = Math.floor(new Date() / 1000);
-  pmx.emit('Interval Measurement', {
-                            "Timestamp": timestamp,
-                            "mA" : milliampere
-                        });
   fs.readFile('/sys/bus/iio/devices/iio\:device0/in_voltage1_raw', 'utf8', function (err,data) {
     milliampere = -1;
     if (err) {
       return console.log(err);
     }
-    console.log(data);
     milliampere = 0.06*data;
-    console.log(milliampere);
+    console.log("Milliampere: " + milliampere);
   });
-/*  pmx.emit('Interval Measurement 2', {
-                            "Timestamp": timestamp,
-                            "mA" : data
-                        });
-*/
+  pmx.emit('Interval Measurement', {
+    "Timestamp": timestamp,
+    "mA" : milliampere
+  });
+    
 }, 1000);
