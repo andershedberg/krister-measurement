@@ -1,4 +1,8 @@
-var pmx = require('pmx');
+var pmx = require('pmx').init({
+    network: true,
+    ports: true
+});
+
 var probe = pmx.probe();
 
 var histogram = probe.histogram({
@@ -12,4 +16,3 @@ setInterval(function() {
   latency = Math.round(Math.random() * 100);
   histogram.update(latency);
 }, 100);
-
