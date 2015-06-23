@@ -14,4 +14,9 @@ var metric = probe.metric({
 
 setInterval(function() {
   milliampere = Math.round(Math.random() * 100);
-}, 100);
+  var timestamp = Math.floor(new Date() / 1000);
+  pmx.emit('Internval Measurement', {
+                            "Timestamp": , timestamp,
+                            "mA" : milliampere
+                        });
+}, 1000);
