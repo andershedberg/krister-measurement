@@ -13,7 +13,7 @@
 
     // First application
     {
-      name      : "API",
+      name      : "Hello world webb",
       script    : "app.js",
       env: {
         COMMON_VARIABLE: "true"
@@ -21,7 +21,17 @@
       env_production : {
         NODE_ENV: "production"
       }
-    }
+    },
+    {
+      name      : "Measurements",
+      script    : "measure.js",
+      env: {
+        COMMON_VARIABLE: "true"
+      },
+      env_production : {
+        NODE_ENV: "production"
+      }
+    },
 
   ],
 
