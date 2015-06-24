@@ -1,6 +1,9 @@
 //We need to write and read in order to set up ADC on BBB
 fs = require('fs')
 
+//We need mongodb
+var mongodb = require('mongodb');
+
 //pmx is used to send live data to Keymetrics account for debugging
 var pmx = require('pmx').init({
     network: true,
@@ -39,5 +42,29 @@ setInterval(function() {
     "Timestamp": timestamp,
     "mA" : milliampere
   });
-    
+
+  // Standard URI format: mongodb://[dbuser:dbpassword@]host:port/dbname
+  var uri = 'mongodb://krister:xyzabc@ds027521.mongolab.com:27521/krister-measure';
+  mongodb.MongoClient.connect(uri, function(err,db) {
+    if (err) { 
+      console.log(err);
+    } 
+    else {
+      var measurements = db.collection('measurements');
+      measurements.insert({"Timestamp": timestamp, "mA" : milliampere}, function(err,result) {
+         if (err) { 
+           console.log(err);
+         }
+         else {
+           db.close(function(err) {
+             if (err) {
+               consle.log(err);
+             };
+           });
+         
+         };
+       });
+    };
+  });
 }, 1000);
+
